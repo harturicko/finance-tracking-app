@@ -3,12 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 from transactions import Transaction
 from db import db, Base
 import os
+import time
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:1234@localhost:5433/mydb'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI') or 'sqlite:///' + os.path.join(basedir,'app.db')
 db.init_app(app)
+    
+
 
 @app.route("/")
 def index():
@@ -29,8 +33,8 @@ def transaction_create():
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-
     app.run(debug=True, host='0.0.0.0')
     print(Transaction.query.all())
+
+with app.app_context():
+    db.create_all()

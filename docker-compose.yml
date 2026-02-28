@@ -1,0 +1,19 @@
+services:
+    web:
+        build: .
+        ports:
+        - "5004:5000"
+        - "8000:8000"
+        environment:
+            - DATABASE_URI=postgresql://user:pswd@db:5432/mydb
+
+    db:
+        image: "postgres"
+        ports: 
+        - "5433:5432"
+        environment:
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=pswd
+            - POSTGRES_DB=mydb
+            
+            
